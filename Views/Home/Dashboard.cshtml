@@ -1,0 +1,126 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<!-- USER DASHBOARD (Logged In) -->
+<div class="row g-4 mb-4">
+    <div class="col-12">
+        <div class="card border-0 bg-primary bg-opacity-10 shadow-sm p-4 text-center text-md-start">
+            <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
+                <div>
+                     <h2 class="fw-bold text-primary mb-1">Hoşgeldin, @(User.Identity?.Name ?? "Kullanıcı")! 👋</h2>
+                     <p class="text-muted mb-0">
+                         @if (ViewBag.SmartMessage != null)
+                         {
+                             <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-3">
+                                 <i class="bi bi-shield-check me-1"></i> @ViewBag.SmartMessage
+                             </span>
+                         }
+                         else 
+                         {
+                             <span>Bugün senin için harika bir gün olsun.</span>
+                         }
+                     </p>
+                </div>
+                <div class="mt-3 mt-md-0">
+                    <a asp-controller="Calculators" asp-action="Index" class="btn btn-primary btn-lg shadow-sm">
+                        <i class="bi bi-calculator me-1"></i> Yeni Bir Hesaplama Yap
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Quick Stats Mockup -->
+    <div class="col-lg-8">
+        <h5 class="fw-bold mb-3">Günlük Özetin</h5>
+        <div class="row g-3">
+             <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="display-6 fw-bold text-warning mb-1">1250</div>
+                         <div class="text-muted small">Alınan Kalori</div>
+                         <div class="progress mt-3" style="height: 6px;">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 65%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                     <div class="card-body text-center p-4">
+                        <div class="display-6 fw-bold text-danger mb-1">450</div>
+                         <div class="text-muted small">Yakılan Kalori</div>
+                          <div class="progress mt-3" style="height: 6px;">
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: 40%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                     <div class="card-body text-center p-4">
+                        <div class="display-6 fw-bold text-info mb-1">2.1</div>
+                         <div class="text-muted small">Su (Litre)</div>
+                          <div class="progress mt-3" style="height: 6px;">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h5 class="fw-bold mt-5 mb-3">Önerilen Tarifler</h5>
+         <div class="card border-0 shadow-sm bg-white overflow-hidden">
+            <div class="row g-0">
+                <div class="col-md-4">
+                     <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80" class="img-fluid h-100" style="object-fit: cover; min-height: 200px;" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body h-100 d-flex flex-column justify-content-center">
+                        <h5 class="card-title fw-bold">Kinoa ve Avokadolu Yeşil Kase</h5>
+                        <p class="card-text text-muted small">Öğle yemeği için hafif ve doyurucu bir seçenek. Bol protein ve lif içerir.</p>
+                        <a asp-controller="Recipes" asp-action="Details" asp-route-id="1" class="text-primary text-decoration-none fw-bold small stretched-link">Tarifi Gör <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar / Tools -->
+    <div class="col-lg-4">
+         <h5 class="fw-bold mb-3">Hızlı Araçlar</h5>
+         <div class="list-group shadow-sm border-0 rounded-3 mb-4">
+            <a asp-controller="Calculators" asp-action="BMI" class="list-group-item list-group-item-action border-0 py-3 d-flex align-items-center">
+                 <div class="bg-primary bg-opacity-10 text-primary p-2 rounded-circle me-3">
+                     <i class="bi bi-speedometer2"></i>
+                 </div>
+                 <div>
+                     <div class="fw-bold text-dark">Vücut Kitle Endeksi</div>
+                     <small class="text-muted">Sağlık durumunu kontrol et</small>
+                 </div>
+                 <i class="bi bi-chevron-right ms-auto text-muted"></i>
+            </a>
+            <a asp-controller="Calculators" asp-action="Calorie" class="list-group-item list-group-item-action border-0 py-3 d-flex align-items-center">
+                 <div class="bg-warning bg-opacity-10 text-warning p-2 rounded-circle me-3">
+                     <i class="bi bi-fire"></i>
+                 </div>
+                 <div>
+                     <div class="fw-bold text-dark">Kalori İhtiyacı</div>
+                     <small class="text-muted">Günlük hedefini belirle</small>
+                 </div>
+                  <i class="bi bi-chevron-right ms-auto text-muted"></i>
+            </a>
+         </div>
+
+         <div class="card border-0 bg-dark text-white shadow-sm overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=800&q=80'); background-size: cover;">
+             <div class="card-body p-5 bg-dark bg-opacity-50 text-center">
+                 <h4 class="fw-bold">Premium'a Geç</h4>
+                 <p class="small opacity-75">Diyetisyen desteği ve özel programlar için şimdi yükselt.</p>
+                 <button class="btn btn-light btn-sm fw-bold rounded-pill px-4">İncele</button>
+             </div>
+         </div>
+    </div>
+</div>

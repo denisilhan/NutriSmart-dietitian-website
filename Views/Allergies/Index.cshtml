@@ -1,0 +1,79 @@
+@model IEnumerable<NutriSmart.Models.Allergy>
+
+@{
+    ViewData["Title"] = "Alerjenler";
+    // Statik açıklamalar ve renkler (Demo için)
+    var allergyInfo = new Dictionary<string, (string Desc, string Icon, string Color)>
+    {
+        { "Gluten", ("Buğday, arpa ve çavdarda bulunan protein.", "fa-bread-slice", "warning") },
+        { "Laktoz", ("Süt ve süt ürünlerinde bulunan doğal şeker.", "fa-glass-whiskey", "info") },
+        { "Fıstık", ("Ciddi reaksiyonlara neden olabilen yaygın bir alerjen.", "fa-seedling", "danger") },
+        { "Kabuklu Deniz Ürünleri", ("Karides, yengeç, istakoz vb.", "fa-fish", "primary") },
+        { "Yumurta", ("Genellikle yumurta beyazına karşı gelişir.", "fa-egg", "warning") },
+        { "Soya", ("Soya fasulyesi ve ürünlerinde bulunur.", "fa-leaf", "success") },
+        { "Bal", ("Polen alerjisi ile ilişkili olabilir.", "fa-jar", "warning") },
+        { "Susam", ("Çeşitli yiyeceklerde gizli olabilir.", "fa-circle", "secondary") }
+    };
+
+    (string Desc, string Icon, string Color) GetInfo(string name) 
+    {
+        return allergyInfo.ContainsKey(name) ? allergyInfo[name] : ("Bilinen yaygın bir alerjen.", "fa-exclamation-circle", "secondary");
+    }
+}
+
+<div class="container-fluid py-4">
+    <div class="row mb-4 text-center">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="display-5 fw-bold text-danger mb-3">
+                <i class="bi bi-exclamation-octagon-fill me-2"></i>Besin Alerjenleri
+            </h1>
+            <p class="lead text-muted">Alerjenler hakkında bilmeniz gerekenler ve hangi besinlerde bulundukları.</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var item in Model)
+        {
+            var info = GetInfo(item.Ad);
+            <div class="col-md-6 col-lg-4 col-xl-3">
+                <div class="card h-100 border-0 shadow-sm hover-elevate">
+                    <div class="card-body text-center p-4">
+                        <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-@info.Color bg-opacity-10 text-@info.Color mb-4" style="width: 80px; height: 80px;">
+                            <i class="bi bi-exclamation-triangle-fill fs-1"></i>
+                        </div>
+                        <h4 class="card-title fw-bold mb-2">@item.Ad</h4>
+                        <p class="card-text text-muted small mb-4">@info.Desc</p>
+                        
+                        <div class="alert alert-light border border-light-subtle rounded-3 p-2 small text-start">
+                            <strong class="d-block mb-1 text-dark"><i class="bi bi-search me-1"></i> Bulunabileceği Besinler (Sistemde):</strong>
+                            @if (item.FoodAllergies.Any())
+                            {
+                                <div class="d-flex flex-wrap gap-1">
+                                    @foreach (var fa in item.FoodAllergies.Take(3))
+                                    {
+                                        <span class="badge bg-secondary bg-opacity-10 text-secondary border">@fa.Food?.Ad</span>
+                                    }
+                                    @if(item.FoodAllergies.Count > 3) { <span class="badge bg-light text-muted">+@(item.FoodAllergies.Count - 3)</span> }
+                                </div>
+                            }
+                            else
+                            {
+                                <span class="text-muted fst-italic">Kayıtlı besin yok.</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .hover-elevate {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-elevate:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+    }
+</style>

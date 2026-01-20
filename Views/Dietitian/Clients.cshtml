@@ -1,0 +1,99 @@
+@model IEnumerable<NutriSmart.Models.User>
+@{
+    ViewData["Title"] = "Danışanlar";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="fw-bold mb-1">Danışanlar</h1>
+        <p class="text-muted">Sistemdeki tüm danışanları görüntüleyebilir ve yönetebilirsiniz.</p>
+    </div>
+    <a asp-controller="Dietitian" asp-action="Index" class="btn btn-outline-secondary rounded-pill">
+        <i class="bi bi-arrow-left me-2"></i>Geri
+    </a>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-2"></i>@TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="text-center py-5">
+        <i class="bi bi-person-x fs-1 text-muted"></i>
+        <p class="text-muted mt-3">Henüz kayıtlı danışan bulunmuyor.</p>
+    </div>
+}
+else
+{
+    <div class="row g-4">
+        @foreach (var client in Model)
+        {
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; font-size: 1.2rem; font-weight: 600;">
+                                @client.Ad.Substring(0, 1).ToUpper()@client.Soyad.Substring(0, 1).ToUpper()
+                            </div>
+                            <div>
+                                <h5 class="fw-bold mb-0">@client.Ad @client.Soyad</h5>
+                                <small class="text-muted">@client.Email</small>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            @if (client.Boy.HasValue || client.Kilo.HasValue)
+                            {
+                                <div class="d-flex gap-3 text-muted small">
+                                    @if (client.Boy.HasValue)
+                                    {
+                                        <span><i class="bi bi-rulers me-1"></i>@client.Boy cm</span>
+                                    }
+                                    @if (client.Kilo.HasValue)
+                                    {
+                                        <span><i class="bi bi-speedometer2 me-1"></i>@client.Kilo kg</span>
+                                    }
+                                </div>
+                            }
+                        </div>
+
+                        <div class="mb-3">
+                            <small class="text-muted d-block mb-2">Alerjenler:</small>
+                            @if (client.UserAllergies.Any())
+                            {
+                                <div class="d-flex flex-wrap gap-1">
+                                    @foreach (var ua in client.UserAllergies)
+                                    {
+                                        <span class="badge bg-danger bg-opacity-10 text-danger">
+                                            <i class="bi bi-exclamation-triangle me-1"></i>@ua.Allergy.Ad
+                                        </span>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success bg-opacity-10 text-success">
+                                    <i class="bi bi-check-circle me-1"></i>Alerji yok
+                                </span>
+                            }
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <a asp-action="ClientDetails" asp-route-id="@client.Id" class="btn btn-primary btn-sm rounded-pill flex-fill">
+                                <i class="bi bi-eye me-1"></i>Detay
+                            </a>
+                            <a asp-action="RecommendFoods" asp-route-id="@client.Id" class="btn btn-outline-success btn-sm rounded-pill flex-fill">
+                                <i class="bi bi-lightbulb me-1"></i>Öneriler
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

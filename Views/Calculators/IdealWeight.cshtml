@@ -1,0 +1,50 @@
+@{
+    ViewData["Title"] = "İdeal Kilo";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="d-flex align-items-center mb-4">
+            <a asp-action="Index" class="btn btn-light rounded-circle me-3"><i class="bi bi-arrow-left"></i></a>
+            <h2 class="fw-bold m-0">İdeal Kilo Hesaplama</h2>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <form asp-action="IdealWeight" method="post">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold d-block">Cinsiyet</label>
+                        <div class="btn-group w-100" role="group">
+                            <input type="radio" class="btn-check" name="gender" id="male" value="male" checked>
+                            <label class="btn btn-outline-primary" for="male">Erkek</label>
+
+                            <input type="radio" class="btn-check" name="gender" id="female" value="female">
+                            <label class="btn btn-outline-primary" for="female">Kadın</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Boy (cm)</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-rulers"></i></span>
+                            <input type="number" name="height" class="form-control" placeholder="175" required min="100" max="250">
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-success w-100 py-2 fw-bold">HESAPLA</button>
+                    </div>
+                </form>
+
+                @if (ViewBag.Result != null)
+                {
+                    <div class="mt-4 pt-4 border-top text-center fade-in">
+                        <div class="small text-muted mb-1">İdeal Kilonuz</div>
+                        <div class="display-4 fw-bold text-success mb-2">@ViewBag.Result kg</div>
+                        <p class="text-muted small">Bu değer istatistiksel bir tahmindir.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

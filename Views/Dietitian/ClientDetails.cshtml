@@ -1,0 +1,122 @@
+@model NutriSmart.Models.User
+@{
+    ViewData["Title"] = $"{Model.Ad} {Model.Soyad} - Danışan Detayı";
+    var allAllergies = ViewBag.AllAllergies as List<NutriSmart.Models.Allergy>;
+    var userAllergyIds = Model.UserAllergies.Select(ua => ua.AllergyId).ToList();
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item"><a asp-action="Index">Diyetisyen Paneli</a></li>
+                <li class="breadcrumb-item"><a asp-action="Clients">Danışanlar</a></li>
+                <li class="breadcrumb-item active">@Model.Ad @Model.Soyad</li>
+            </ol>
+        </nav>
+        <h1 class="fw-bold mb-0">@Model.Ad @Model.Soyad</h1>
+    </div>
+    <a asp-action="Clients" class="btn btn-outline-secondary rounded-pill">
+        <i class="bi bi-arrow-left me-2"></i>Geri
+    </a>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-2"></i>@TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="row g-4">
+    <!-- Kişisel Bilgiler -->
+    <div class="col-lg-5">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                <h5 class="fw-bold mb-0"><i class="bi bi-person-circle me-2 text-primary"></i>Kişisel Bilgiler</h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center gap-4 mb-4">
+                    <div class="avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; font-size: 2rem; font-weight: 600;">
+                        @Model.Ad.Substring(0, 1).ToUpper()@Model.Soyad.Substring(0, 1).ToUpper()
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-1">@Model.Ad @Model.Soyad</h4>
+                        <p class="text-muted mb-0">@Model.Email</p>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="p-3 bg-light rounded-3 text-center">
+                            <div class="fs-4 fw-bold text-primary">@(Model.Boy.HasValue ? $"{Model.Boy} cm" : "-")</div>
+                            <small class="text-muted">Boy</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-3 bg-light rounded-3 text-center">
+                            <div class="fs-4 fw-bold text-success">@(Model.Kilo.HasValue ? $"{Model.Kilo} kg" : "-")</div>
+                            <small class="text-muted">Kilo</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 d-flex gap-2">
+                    <a asp-action="EditClient" asp-route-id="@Model.Id" class="btn btn-outline-primary rounded-pill flex-fill">
+                        <i class="bi bi-pencil me-2"></i>Düzenle
+                    </a>
+                    <a asp-action="RecommendFoods" asp-route-id="@Model.Id" class="btn btn-success rounded-pill flex-fill">
+                        <i class="bi bi-lightbulb me-2"></i>Besin Öner
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alerjen Yönetimi -->
+    <div class="col-lg-7">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                <h5 class="fw-bold mb-0"><i class="bi bi-shield-exclamation me-2 text-warning"></i>Alerjen Yönetimi</h5>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="UpdateClientAllergies" method="post">
+                    <input type="hidden" name="clientId" value="@Model.Id" />
+                    
+                    <p class="text-muted mb-3">Bu danışanın sahip olduğu alerjenleri işaretleyin. Bu bilgi besin önerilerinde kullanılacaktır.</p>
+                    
+                    @if (allAllergies == null || !allAllergies.Any())
+                    {
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle me-2"></i>Sistemde tanımlı alerjen bulunmuyor. 
+                            <a asp-action="CreateAllergy" class="alert-link">İlk alerjeni ekleyin</a>.
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row g-2 mb-4">
+                            @foreach (var allergy in allAllergies)
+                            {
+                                var isChecked = userAllergyIds.Contains(allergy.Id);
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-check p-3 border rounded-3 @(isChecked ? "border-danger bg-danger bg-opacity-10" : "")">
+                                        <input class="form-check-input" type="checkbox" name="selectedAllergies" 
+                                               value="@allergy.Id" id="allergy_@allergy.Id" @(isChecked ? "checked" : "")>
+                                        <label class="form-check-label fw-medium" for="allergy_@allergy.Id">
+                                            @allergy.Ad
+                                        </label>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+
+                    <button type="submit" class="btn btn-primary rounded-pill px-4">
+                        <i class="bi bi-check2-circle me-2"></i>Alerjenleri Kaydet
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

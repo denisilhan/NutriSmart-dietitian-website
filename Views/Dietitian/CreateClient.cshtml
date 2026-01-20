@@ -1,0 +1,80 @@
+@model NutriSmart.Models.User
+
+@{
+    ViewData["Title"] = "Yeni Danışan Ekle";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-1">
+                        <li class="breadcrumb-item"><a asp-action="Index">Panel</a></li>
+                        <li class="breadcrumb-item"><a asp-action="Clients">Danışanlar</a></li>
+                        <li class="breadcrumb-item active">Yeni Ekle</li>
+                    </ol>
+                </nav>
+                <h2 class="fw-bold mb-0">Yeni Danışan Ekle</h2>
+            </div>
+            <a asp-action="Clients" class="btn btn-outline-secondary rounded-pill">
+                <i class="bi bi-arrow-left me-2"></i>Listeye Dön
+            </a>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4 p-md-5">
+                <form asp-action="CreateClient">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4" role="alert"></div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label asp-for="Ad" class="form-label fw-bold text-muted small">Ad</label>
+                            <input asp-for="Ad" class="form-control" placeholder="Örn: Ahmet" />
+                            <span asp-validation-for="Ad" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Soyad" class="form-label fw-bold text-muted small">Soyad</label>
+                            <input asp-for="Soyad" class="form-control" placeholder="Örn: Yılmaz" />
+                            <span asp-validation-for="Soyad" class="text-danger small"></span>
+                        </div>
+                        
+                        <div class="col-12">
+                            <label asp-for="Email" class="form-label fw-bold text-muted small">E-Posta Adresi</label>
+                            <input asp-for="Email" type="email" class="form-control" placeholder="ornek@email.com" />
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Sifre" class="form-label fw-bold text-muted small">Geçici Şifre</label>
+                            <input asp-for="Sifre" type="text" class="form-control" placeholder="En az 6 karakter" value="Danisan123!" />
+                            <div class="form-text">Danışan bu şifre ile sisteme giriş yapabilir.</div>
+                            <span asp-validation-for="Sifre" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Boy" class="form-label fw-bold text-muted small">Boy (cm)</label>
+                            <input asp-for="Boy" type="number" class="form-control" placeholder="170" />
+                            <span asp-validation-for="Boy" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Kilo" class="form-label fw-bold text-muted small">Kilo (kg)</label>
+                            <input asp-for="Kilo" type="number" step="0.1" class="form-control" placeholder="70.5" />
+                            <span asp-validation-for="Kilo" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-5">
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold">
+                            <i class="bi bi-person-plus-fill me-2"></i>Danışanı Oluştur
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,119 @@
+@model NutriSmart.Models.Food
+
+@{
+    ViewData["Title"] = Model.Ad + " - Besin Detayları";
+}
+
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Ana Sayfa</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Foods" asp-action="Index">Besinler</a></li>
+        <li class="breadcrumb-item active">@Model.Ad</li>
+    </ol>
+</nav>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body p-5">
+                <div class="d-flex align-items-center gap-4 mb-4">
+                    @if (!string.IsNullOrEmpty(Model.ResimYolu))
+                    {
+                        <img src="~/images/foods/@Model.ResimYolu" asp-append-version="true" alt="@Model.Ad" class="rounded-3" style="width: 120px; height: 120px; object-fit: cover;" onerror="this.src='https://placehold.co/120?text=🍽️'">
+                    }
+                    else
+                    {
+                        <div class="bg-light rounded-3 d-flex align-items-center justify-content-center" style="width: 120px; height: 120px;">
+                            <i class="bi bi-egg-fried fs-1 text-muted"></i>
+                        </div>
+                    }
+                    <div>
+                        <h1 class="display-6 fw-bold mb-2">@Model.Ad</h1>
+                        <p class="text-muted lead mb-0">@Model.Icerik</p>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <h3 class="fw-bold mb-3"><i class="bi bi-fire me-2 text-danger"></i>Besin Değerleri</h3>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted">Kalori (100g başına)</span>
+                                <strong class="fs-4 text-danger">@Model.Kalori kcal</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.FoodAllergies != null && Model.FoodAllergies.Any())
+                {
+                    <hr class="my-4">
+                    <h3 class="fw-bold mb-3"><i class="bi bi-exclamation-triangle-fill me-2 text-warning"></i>Alerjen Uyarıları</h3>
+                    <div class="alert alert-warning border-0 d-flex align-items-start gap-3">
+                        <i class="bi bi-shield-exclamation fs-3"></i>
+                        <div>
+                            <strong class="d-block mb-2">Bu besin aşağıdaki alerjenleri içermektedir:</strong>
+                            <div class="d-flex flex-wrap gap-2">
+                                @foreach (var fa in Model.FoodAllergies)
+                                {
+                                    <span class="badge bg-danger py-2 px-3">
+                                        <i class="bi bi-x-circle me-1"></i>@fa.Allergy.Ad
+                                    </span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm sticky-top" style="top: 2rem;">
+            <div class="card-body p-4">
+                <h5 class="fw-bold mb-3"><i class="bi bi-info-circle me-2"></i>Hızlı Bilgi</h5>
+                
+                <div class="mb-4">
+                    <h6 class="text-muted small mb-2">KATEGORİ</h6>
+                    <span class="badge bg-primary-subtle text-primary px-3 py-2">
+                        @(GetCategory(Model.Id))
+                    </span>
+                </div>
+
+                <div class="mb-4">
+                    <h6 class="text-muted small mb-2">DURUMU</h6>
+                    @if (Model.FoodAllergies != null && Model.FoodAllergies.Any())
+                    {
+                        <span class="badge bg-warning-subtle text-warning px-3 py-2">
+                            <i class="bi bi-exclamation-triangle-fill me-1"></i>Alerjen İçerir
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success-subtle text-success px-3 py-2">
+                            <i class="bi bi-check-circle-fill me-1"></i>Güvenli
+                        </span>
+                    }
+                </div>
+
+                <a asp-action="Index" class="btn btn-outline-primary w-100 rounded-pill">
+                    <i class="bi bi-arrow-left me-2"></i>Tüm Besinler
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    string GetCategory(int id)
+    {
+        if (id <= 20) return "Meyve";
+        if (id <= 40) return "Sebze";
+        if (id <= 50) return "Protein";
+        if (id <= 60) return "Tahıl/Baklagil";
+        if (id <= 70) return "Süt Ürünü";
+        return "Diğer";
+    }
+}

@@ -1,0 +1,95 @@
+@model NutriSmart.Models.Recipe
+
+@{
+    ViewData["Title"] = "Yeni Tarif Ekle";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 pt-4 pb-0">
+                    <h3 class="fw-bold text-success"><i class="bi bi-plus-circle me-2"></i>Yeni Tarif Ekle</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Ad" class="form-label fw-bold">Tarif Adı</label>
+                            <input asp-for="Ad" class="form-control" placeholder="Örn: Mercimek Çorbası" />
+                            <span asp-validation-for="Ad" class="text-danger"></span>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="Kategori" class="form-label fw-bold">Kategori</label>
+                                <select asp-for="Kategori" class="form-select">
+                                    <option value="Ana Yemek">Ana Yemek</option>
+                                    <option value="Çorba">Çorba</option>
+                                    <option value="Salata">Salata</option>
+                                    <option value="Tatlı">Tatlı</option>
+                                    <option value="Kahvaltı">Kahvaltı</option>
+                                    <option value="Ara Öğün">Ara Öğün</option>
+                                    <option value="İçecek">İçecek</option>
+                                </select>
+                                <span asp-validation-for="Kategori" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="KisiSayisi" class="form-label fw-bold">Kaç Kişilik</label>
+                                <input asp-for="KisiSayisi" class="form-control" type="number" min="1" />
+                                <span asp-validation-for="KisiSayisi" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-4">
+                                <label asp-for="HazirlamaSuresi" class="form-label fw-bold">Hazırlama (dk)</label>
+                                <input asp-for="HazirlamaSuresi" class="form-control" type="number" min="0" />
+                                <span asp-validation-for="HazirlamaSuresi" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="PisirmeSuresi" class="form-label fw-bold">Pişirme (dk)</label>
+                                <input asp-for="PisirmeSuresi" class="form-control" type="number" min="0" />
+                                <span asp-validation-for="PisirmeSuresi" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Kalori" class="form-label fw-bold">Kalori (kcal/porsiyon)</label>
+                                <input asp-for="Kalori" class="form-control" type="number" min="0" />
+                                <span asp-validation-for="Kalori" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Malzemeler" class="form-label fw-bold">Malzemeler</label>
+                            <textarea asp-for="Malzemeler" class="form-control" rows="4" placeholder="Her satıra bir malzeme yazınız..."></textarea>
+                            <span asp-validation-for="Malzemeler" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Talimatlar" class="form-label fw-bold">Hazırlanışı</label>
+                            <textarea asp-for="Talimatlar" class="form-control" rows="5" placeholder="Tarifin yapılış aşamalarını anlatınız..."></textarea>
+                            <span asp-validation-for="Talimatlar" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="ResimYolu" class="form-label fw-bold">Resim Dosya Adı</label>
+                            <input asp-for="ResimYolu" class="form-control" placeholder="Örn: corba.jpg (images/recipes klasöründeki dosya adı)" />
+                            <div class="form-text">Şimdilik sadece sunucuda var olan resim isimlerini giriniz.</div>
+                            <span asp-validation-for="ResimYolu" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-success flex-fill fw-bold py-2">Kaydet</button>
+                            <a asp-action="Index" class="btn btn-outline-secondary px-4 py-2">İptal</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

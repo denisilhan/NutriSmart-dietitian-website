@@ -1,0 +1,105 @@
+@model IEnumerable<NutriSmart.Models.Recipe>
+
+@{
+    ViewData["Title"] = "Tarifler";
+}
+
+<div class="container-fluid py-4">
+    <div class="row mb-4  align-items-center">
+        <div class="col-md-8">
+            <h1 class="display-6 fw-bold mb-2">
+                <i class="bi bi-journal-bookmark-fill me-2 text-success"></i>Lezzetli Tarifler
+            </h1>
+            <p class="text-muted lead mb-0">Sağlıklı ve kolay tarifler sizinle</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a asp-action="Create" class="btn btn-success btn-lg rounded-pill">
+                <i class="bi bi-plus-circle me-2"></i>Yeni Tarif Ekle
+            </a>
+        </div>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach (var recipe in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm card-hover">
+                        @if (!string.IsNullOrEmpty(recipe.ResimYolu))
+                        {
+                            <img src="~/images/recipes/@recipe.ResimYolu" asp-append-version="true" class="card-img-top" alt="@recipe.Ad" style="height: 200px; object-fit: cover;" onerror="this.src='https://placehold.co/400x200/84A98C/white?text=Tarif'">
+                        }
+                        else
+                        {
+                            <div class="bg-success bg-opacity-10 d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <i class="bi bi-egg-fried fs-1 text-success opacity-50"></i>
+                            </div>
+                        }
+                        
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title fw-bold mb-0">@recipe.Ad</h5>
+                                <span class="badge bg-success-subtle text-success rounded-pill">@recipe.Kategori</span>
+                            </div>
+                            
+                            <div class="d-flex gap-3 my-3 text-muted small">
+                                <div>
+                                    <i class="bi bi-clock me-1"></i>
+                                    @(recipe.HazirlamaSuresi + recipe.PisirmeSuresi) dk
+                                </div>
+                                <div>
+                                    <i class="bi bi-people me-1"></i>
+                                    @recipe.KisiSayisi kişilik
+                                </div>
+                                @if (recipe.Kalori.HasValue)
+                                {
+                                    <div>
+                                        <i class="bi bi-fire me-1"></i>
+                                        @recipe.Kalori kcal
+                                    </div>
+                                }
+                            </div>
+                            
+                            <p class="card-text text-muted small">
+                                @(recipe.Talimatlar.Length > 100 ? recipe.Talimatlar.Substring(0, 100) + "..." : recipe.Talimatlar)
+                            </p>
+                        </div>
+                        
+                        <div class="card-footer bg-transparent border-0 p-3">
+                            <div class="d-flex gap-2">
+                                <a asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-sm btn-outline-success flex-fill rounded-pill">
+                                    <i class="bi bi-eye me-1"></i> Detay
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@recipe.Id" class="btn btn-sm btn-outline-secondary rounded-pill">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <i class="bi bi-journal-x fs-1 text-muted mb-3 d-block"></i>
+            <h3 class="text-muted">Henüz Tarif Yok</h3>
+            <p class="text-secondary">İlk tarifi siz ekleyin!</p>
+            <a asp-action="Create" class="btn btn-success rounded-pill px-4 mt-2">
+                <i class="bi bi-plus-circle me-2"></i>Tarif Ekle
+            </a>
+        </div>
+    }
+</div>
+
+<style>
+    .card-hover {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    }
+</style>

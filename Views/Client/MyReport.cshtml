@@ -1,0 +1,176 @@
+@model NutriSmart.Models.User
+
+@{
+    ViewData["Title"] = "Beslenme Rehberim";
+    var safeFoods = ViewBag.SafeFoods as List<NutriSmart.Models.Food>;
+    var riskyFoods = ViewBag.RiskyFoods as List<NutriSmart.Models.Food>;
+}
+
+<div class="container py-4">
+    <!-- Header with Print Button -->
+    <div class="d-flex justify-content-between align-items-center mb-4 no-print">
+        <div>
+            <h1 class="fw-bold text-primary">Beslenme Rehberim</h1>
+            <p class="text-muted">Kişisel alerjen ve beslenme raporunuz.</p>
+        </div>
+        <button onclick="window.print()" class="btn btn-primary rounded-pill shadow-sm">
+            <i class="bi bi-printer me-2"></i>Raporu Yazdır
+        </button>
+    </div>
+
+    <!-- Printable Area -->
+    <div class="printable-area">
+        <!-- Report Header (Visible on print) -->
+        <div class="text-center mb-5 d-none d-print-block">
+             <h2 class="fw-bold text-primary mb-1">NutriSmart Beslenme Raporu</h2>
+             <p class="text-muted">Danışan: @Model.Ad @Model.Soyad | Tarih: @DateTime.Now.ToString("dd.MM.yyyy")</p>
+             <hr />
+        </div>
+
+        <div class="row g-4">
+            <!-- Allergies Section -->
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-danger bg-opacity-10 text-danger fw-bold border-0 py-3">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>Tanımlı Alerjenleriniz
+                    </div>
+                    <div class="card-body">
+                        @if (Model.UserAllergies.Any())
+                        {
+                            <div class="d-flex flex-wrap gap-2">
+                                @foreach (var ua in Model.UserAllergies)
+                                {
+                                    <span class="badge bg-danger fs-6 py-2 px-3 fw-normal">@ua.Allergy.Ad</span>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted mb-0">Sistemde kayıtlı alerjeniniz bulunmamaktadır.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Safe Foods Section -->
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-success bg-opacity-10 text-success fw-bold border-0 py-3">
+                        <i class="bi bi-check-circle-fill me-2"></i>Tüketebileceğiniz Güvenli Besinler
+                    </div>
+                    <div class="card-body p-4">
+                        @if (safeFoods != null && safeFoods.Any())
+                        {
+                             <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Besin</th>
+                                            <th>Kalori (kcal)</th>
+                                            <th>İçerik</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var food in safeFoods)
+                                        {
+                                            <tr>
+                                                <td class="fw-bold text-primary">
+                                                    @if(!string.IsNullOrEmpty(food.ResimYolu)) {
+                                                        <img src="~/images/foods/@food.ResimYolu" class="rounded-circle me-2" width="30" height="30" style="object-fit:cover" onerror="this.src='/images/default-food.png'">
+                                                    }
+                                                    @food.Ad
+                                                </td>
+                                                <td>@food.Kalori</td>
+                                                <td class="text-muted small">@food.Icerik</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="text-center py-5">
+                                <i class="bi bi-basket text-muted fs-1 mb-3"></i>
+                                <p class="text-muted">Listelenecek güvenli besin bulunamadı.</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Risky Foods Section (Optional/Bottom) -->
+             <div class="col-12 mt-4">
+                <div class="accordion" id="riskyFoodsAccord">
+                    <div class="accordion-item border-0 shadow-sm">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed text-danger fw-bold bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRisky">
+                                <i class="bi bi-x-circle-fill me-2"></i>Uzak Durmanız Gerekenler (Riskli)
+                            </button>
+                        </h2>
+                        <div id="collapseRisky" class="accordion-collapse collapse" data-bs-parent="#riskyFoodsAccord">
+                            <div class="accordion-body">
+                                <p class="small text-muted mb-3">Aşağıdaki besinler, tanımlı alerjenlerinizi içermektedir.</p>
+                                @if (riskyFoods != null && riskyFoods.Any())
+                                {
+                                    <div class="d-flex flex-wrap gap-2">
+                                        @foreach (var food in riskyFoods)
+                                        {
+                                           <span class="badge bg-secondary text-decoration-line-through">@food.Ad</span>
+                                        }
+                                    </div>
+                                }
+                                else {
+                                    <span class="text-muted fst-italic">Riskli besin bulunamadı.</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Print Styles */
+    @@media print {
+        /* Hide everything by default that shouldn't be printed */
+        .sidebar, .top-header, .no-print, footer, #themeToggleBtn {
+            display: none !important;
+        }
+
+        /* Reset main content margins */
+        .main-content {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
+        .app-wrapper {
+            display: block !important;
+        }
+
+        /* Expand printable area */
+        .printable-area {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 2rem;
+        }
+        
+        /* Ensure background colors print */
+        .badge, .card-header, .table th {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important; 
+        }
+
+        /* Remove shadows/borders for cleaner print */
+        .shadow-sm {
+            box-shadow: none !important;
+        }
+        .card {
+            border: 1px solid #ddd !important;
+        }
+    }
+</style>

@@ -1,0 +1,304 @@
+/* ===========================================
+   NutriSmart - Site Styles
+   Version: 2.0 (Clean Rewrite)
+   =========================================== */
+
+/* ----- 1. CSS VARIABLES ----- */
+:root {
+  --primary: #84A98C;
+  --primary-dark: #52796F;
+  --primary-light: #CAD2C5;
+  --accent-orange: #F4A261;
+  --accent-red: #E76F51;
+
+  --text: #354F52;
+  --text-muted: #6C757D;
+  --bg: #FDFBF7;
+  --bg-card: #FFFFFF;
+  --bg-sidebar: #FFFFFF;
+
+  --sidebar-w: 280px;
+  --header-h: 70px;
+
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  --radius: 16px;
+  --radius-pill: 50px;
+}
+
+[data-theme="dark"] {
+  --text: #F7FAFC;
+  --text-muted: #A0AEC0;
+  --bg: #171923;
+  /* Night Blue */
+  --bg-card: #2D3748;
+  --bg-sidebar: #1A202C;
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  --border-color: #2D3748;
+}
+
+/* ----- 2. BASE STYLES ----- */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Target html specifically for scroll-behavior */
+  scroll-behavior: smooth;
+}
+
+html,
+body,
+[data-theme="dark"] body {
+  font-family: 'Outfit', sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+a:hover {
+  color: var(--accent-orange);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* ----- 3. LAYOUT ----- */
+.app-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  max-width: var(--sidebar-w);
+  flex-shrink: 0;
+
+  background: var(--bg-sidebar);
+  border-right: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+
+  display: flex;
+  flex-direction: column;
+
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+[data-theme="dark"] .sidebar {
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.top-header {
+  height: var(--header-h);
+  padding: 0 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+[data-theme="dark"] .top-header {
+  background: rgba(26, 32, 44, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.content-body {
+  flex: 1;
+  padding: 2rem;
+}
+
+/* ----- 4. SIDEBAR COMPONENTS ----- */
+.sidebar-brand {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.sidebar-heading {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin: 1.5rem 0 0.75rem;
+  padding-left: 1rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  margin-bottom: 0.25rem;
+  border-radius: var(--radius-pill);
+  color: var(--text-muted) !important;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+.nav-link:hover {
+  background: rgba(132, 169, 140, 0.1);
+  color: var(--primary) !important;
+}
+
+.nav-link.active {
+  background: var(--primary);
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(132, 169, 140, 0.4);
+}
+
+[data-theme="dark"] .nav-link {
+  color: #A0AEC0 !important;
+}
+
+[data-theme="dark"] .nav-link:hover {
+  color: #F7FAFC !important;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .nav-link.active {
+  color: #fff !important;
+  background: var(--primary);
+}
+
+/* ----- 5. CARDS ----- */
+.card {
+  background: var(--bg-card);
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="dark"] .card {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* ----- 6. BUTTONS ----- */
+.btn {
+  border-radius: var(--radius-pill);
+  padding: 0.6rem 1.5rem;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+.btn-light {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+}
+
+[data-theme="dark"] .btn-light {
+  background: #4A5568;
+  border-color: #4A5568;
+  color: #fff;
+}
+
+/* ----- 7. FORMS ----- */
+.form-control,
+.form-select {
+  border-radius: var(--radius);
+  border: 1px solid #e2e8f0;
+  padding: 0.75rem 1rem;
+}
+
+.form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(132, 169, 140, 0.2);
+}
+
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select {
+  background: #2D3748;
+  border-color: #4A5568;
+  color: #fff;
+}
+
+/* ----- 8. UTILITIES ----- */
+[data-theme="dark"] .text-muted {
+  color: #CBD5E0 !important;
+}
+
+[data-theme="dark"] .bg-light {
+  background: #2D3748 !important;
+}
+
+[data-theme="dark"] hr {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Specific Table Overrides */
+[data-theme="dark"] .table {
+  color: var(--text);
+  --bs-table-color: var(--text);
+  --bs-table-bg: transparent;
+  --bs-table-border-color: #4A5568;
+}
+
+[data-theme="dark"] .table-hover>tbody>tr:hover>* {
+  --bs-table-accent-bg: rgba(255, 255, 255, 0.05);
+}
+
+/* Specific Alerts Fix for Dark Mode */
+[data-theme="dark"] .alert-light {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .alert-light .text-dark {
+  color: var(--text) !important;
+}
+
+/* Navbar Fix */
+#team-section {
+  scroll-margin-top: 120px;
+}

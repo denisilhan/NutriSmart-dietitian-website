@@ -1,0 +1,87 @@
+@model IEnumerable<NutriSmart.Models.User>
+
+@{
+    ViewData["Title"] = "Admin Paneli";
+}
+
+<div class="row mb-4 align-items-center">
+    <div class="col">
+        <h2 class="fw-bold text-primary">Kullanıcı Yönetimi</h2>
+        <p class="text-muted">Sistemdeki kayıtlı kullanıcıları buradan yönetebilirsiniz.</p>
+    </div>
+    <div class="col-auto">
+        <a asp-action="Create" class="btn btn-primary shadow-sm rounded-pill px-4">
+            <i class="bi bi-person-plus-fill me-2"></i>Yeni Kullanıcı
+        </a>
+    </div>
+</div>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i> @TempData["ErrorMessage"]
+    </div>
+}
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="ps-4">Kullanıcı</th>
+                        <th>Rol</th>
+                        <th>Email</th>
+                        <th class="text-end pe-4">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="ps-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar-circle me-3 bg-secondary bg-opacity-10 text-secondary d-flex align-items-center justify-content-center fw-bold" style="width: 40px; height: 40px; border-radius: 50%;">
+                                        @(item.Ad.Substring(0, 1) + item.Soyad.Substring(0, 1))
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold text-dark">@item.Ad @item.Soyad</div>
+                                        <div class="small text-muted d-block d-md-none">@item.Email</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                @if (item.Rol == NutriSmart.Models.UserRole.Admin)
+                                {
+                                    <span class="badge bg-danger bg-opacity-10 text-danger px-3 py-2 rounded-pill">Yönetici</span>
+                                }
+                                else if (item.Rol == NutriSmart.Models.UserRole.Dietitian)
+                                {
+                                    <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill">Diyetisyen</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-info bg-opacity-10 text-info px-3 py-2 rounded-pill">Danışan</span>
+                                }
+                            </td>
+                            <td>@item.Email</td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-light text-primary" title="Düzenle">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
+                                    @if (item.Rol != NutriSmart.Models.UserRole.Admin)
+                                    {
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-light text-danger" title="Sil">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </a>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

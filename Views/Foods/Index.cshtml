@@ -1,0 +1,144 @@
+@model IEnumerable<NutriSmart.Models.Food>
+
+@{
+    ViewData["Title"] = "Besin Değerleri";
+    int currentPage = ViewBag.CurrentPage;
+    int totalPages = ViewBag.TotalPages;
+    string search = ViewBag.Search;
+}
+
+<div class="container-fluid py-4">
+    <!-- Header Area -->
+    <div class="row mb-5 align-items-center">
+        <div class="col-md-6">
+            <h1 class="display-6 fw-bold text-primary mb-2">
+                <i class="bi bi-basket-fill me-2"></i>Besin Değerleri
+            </h1>
+            <p class="text-muted lead mb-0">Kalori, içerik ve alerjen bilgilerini keşfedin.</p>
+        </div>
+        <div class="col-md-6 mt-3 mt-md-0">
+            <form asp-action="Index" method="get" class="d-flex gap-2">
+                <div class="input-group input-group-lg shadow-sm">
+                    <span class="input-group-text bg-white border-end-0">
+                        <i class="bi bi-search text-muted"></i>
+                    </span>
+                    <input type="text" name="search" value="@search" class="form-control border-start-0 ps-0" placeholder="Besin ara (örn: Elma, Protein)...">
+                    <button class="btn btn-primary px-4 fw-bold" type="submit">Ara</button>
+                </div>
+                @if (!string.IsNullOrEmpty(search))
+                {
+                    <a asp-action="Index" class="btn btn-outline-secondary d-flex align-items-center" title="Filtreyi Temizle">
+                        <i class="bi bi-x-lg"></i>
+                    </a>
+                }
+            </form>
+        </div>
+    </div>
+
+    <!-- Foods Grid -->
+    @if (Model.Any())
+    {
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4 mb-5">
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm card-hover">
+                        <div class="position-relative">
+                             @if (!string.IsNullOrEmpty(item.ResimYolu))
+                            {
+                                <img src="~/images/foods/@item.ResimYolu" asp-append-version="true" class="card-img-top" alt="@item.Ad" style="height: 200px; object-fit: cover;" onerror="this.src='https://placehold.co/400x300?text=Besin';">
+                            }
+                            else
+                            {
+                                 <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                    <i class="bi bi-basket fs-1 text-muted opacity-50"></i>
+                                </div>
+                            }
+                            
+                            <span class="badge bg-white text-dark position-absolute top-0 end-0 m-3 shadow-sm rounded-pill px-3 py-2 fw-bold">
+                                @item.Kalori kcal
+                            </span>
+                        </div>
+                        
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold mb-2">@item.Ad</h5>
+                            <p class="card-text text-muted small mb-3">@item.Icerik</p>
+                            
+                            @if (item.FoodAllergies != null && item.FoodAllergies.Any())
+                            {
+                                <div class="d-flex flex-wrap gap-1">
+                                    @foreach (var fa in item.FoodAllergies)
+                                    {
+                                        <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill">
+                                            <i class="bi bi-exclamation-triangle-fill me-1" style="font-size: 0.7em;"></i>@fa.Allergy.Ad
+                                        </span>
+                                    }
+                                </div>
+                            }
+                        </div>
+                        <div class="card-footer bg-transparent border-0 pb-3 pt-0">
+                             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-light btn-sm w-100 rounded-pill text-muted">
+                                <i class="bi bi-eye me-1"></i> Detaylı İncele
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Pagination -->
+        @if (totalPages > 1)
+        {
+            <nav aria-label="Page navigation" class="mb-5">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                        <a class="page-link rounded-circle mx-1 border-0 shadow-sm text-dark" asp-route-page="@(currentPage - 1)" asp-route-search="@search">
+                            <i class="bi bi-chevron-left"></i>
+                        </a>
+                    </li>
+                    
+                    @for (int i = 1; i <= totalPages; i++)
+                    {
+                         if (i == 1 || i == totalPages || (i >= currentPage - 2 && i <= currentPage + 2))
+                        {
+                             <li class="page-item @(i == currentPage ? "active" : "")">
+                                <a class="page-link rounded-circle mx-1 border-0 shadow-sm fw-bold @(i == currentPage ? "bg-primary text-white" : "text-dark")" asp-route-page="@i" asp-route-search="@search">@i</a>
+                            </li>
+                        }
+                        else if (i == currentPage - 3 || i == currentPage + 3)
+                        {
+                            <li class="page-item disabled"><span class="page-link border-0">...</span></li>
+                        }
+                    }
+
+                    <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                        <a class="page-link rounded-circle mx-1 border-0 shadow-sm text-dark" asp-route-page="@(currentPage + 1)" asp-route-search="@search">
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        }
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <div class="mb-3">
+                <i class="bi bi-emoji-dizzy fs-1 text-muted"></i>
+            </div>
+            <h3 class="fw-bold text-muted">Sonuç Bulunamadı</h3>
+            <p class="text-secondary">Aradığınız kriterlere uygun besin bulunamadı.</p>
+            <a asp-action="Index" class="btn btn-outline-primary rounded-pill px-4 mt-2">Tüm Listeyi Göster</a>
+        </div>
+    }
+</div>
+
+<style>
+    .card-hover {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    }
+</style>

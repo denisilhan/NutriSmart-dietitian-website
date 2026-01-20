@@ -1,0 +1,43 @@
+@model NutriSmart.Models.Allergy
+@{
+    ViewData["Title"] = "Yeni Alerjen Ekle";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item"><a asp-action="Index">Diyetisyen Paneli</a></li>
+                <li class="breadcrumb-item"><a asp-action="Allergies">Alerjenler</a></li>
+                <li class="breadcrumb-item active">Yeni Ekle</li>
+            </ol>
+        </nav>
+        <h1 class="fw-bold mb-0">Yeni Alerjen Ekle</h1>
+    </div>
+    <a asp-action="Allergies" class="btn btn-outline-secondary rounded-pill">
+        <i class="bi bi-arrow-left me-2"></i>Geri
+    </a>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-5">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <form asp-action="CreateAllergy" method="post">
+                    <div class="mb-4">
+                        <label asp-for="Ad" class="form-label fw-medium">Alerjen Adı</label>
+                        <input asp-for="Ad" class="form-control form-control-lg" placeholder="Örn: Gluten, Laktoz, Fıstık" />
+                        <span asp-validation-for="Ad" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary rounded-pill px-4">
+                            <i class="bi bi-plus-lg me-2"></i>Ekle
+                        </button>
+                        <a asp-action="Allergies" class="btn btn-outline-secondary rounded-pill">İptal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+@model NutriSmart.Models.Food
+@{
+    ViewData["Title"] = "Yeni Besin Ekle";
+    var allergies = ViewBag.Allergies as List<NutriSmart.Models.Allergy>;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item"><a asp-action="Index">Diyetisyen Paneli</a></li>
+                <li class="breadcrumb-item"><a asp-action="Foods">Besinler</a></li>
+                <li class="breadcrumb-item active">Yeni Ekle</li>
+            </ol>
+        </nav>
+        <h1 class="fw-bold mb-0">Yeni Besin Ekle</h1>
+    </div>
+    <a asp-action="Foods" class="btn btn-outline-secondary rounded-pill">
+        <i class="bi bi-arrow-left me-2"></i>Geri
+    </a>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <form asp-action="CreateFood" method="post">
+                    <div class="row g-4">
+                        <div class="col-md-8">
+                            <label asp-for="Ad" class="form-label fw-medium">Besin Adı *</label>
+                            <input asp-for="Ad" class="form-control" placeholder="Örn: Tavuk Göğsü, Elma, Yoğurt" />
+                            <span asp-validation-for="Ad" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="Kalori" class="form-label fw-medium">Kalori (kcal)</label>
+                            <input asp-for="Kalori" type="number" class="form-control" placeholder="100" />
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="Icerik" class="form-label fw-medium">İçerik / Açıklama</label>
+                            <textarea asp-for="Icerik" class="form-control" rows="3" placeholder="Besin hakkında açıklama veya içindekiler..."></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="ResimYolu" class="form-label fw-medium">Resim URL (Opsiyonel)</label>
+                            <input asp-for="ResimYolu" class="form-control" placeholder="https://..." />
+                        </div>
+                        
+                        <div class="col-12">
+                            <label class="form-label fw-medium">İçerdiği Alerjenler</label>
+                            <p class="text-muted small mb-3">Bu besinin içerdiği alerjenleri işaretleyin.</p>
+                            
+                            @if (allergies == null || !allergies.Any())
+                            {
+                                <div class="alert alert-info">
+                                    <i class="bi bi-info-circle me-2"></i>Sistemde tanımlı alerjen bulunmuyor. 
+                                    <a asp-action="CreateAllergy" class="alert-link">İlk alerjeni ekleyin</a>.
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="row g-2">
+                                    @foreach (var allergy in allergies)
+                                    {
+                                        <div class="col-md-4 col-lg-3">
+                                            <div class="form-check p-3 border rounded-3">
+                                                <input class="form-check-input" type="checkbox" name="selectedAllergies" 
+                                                       value="@allergy.Id" id="allergy_@allergy.Id">
+                                                <label class="form-check-label" for="allergy_@allergy.Id">
+                                                    @allergy.Ad
+                                                </label>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="mt-4 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary rounded-pill px-4">
+                            <i class="bi bi-plus-lg me-2"></i>Besin Ekle
+                        </button>
+                        <a asp-action="Foods" class="btn btn-outline-secondary rounded-pill">İptal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

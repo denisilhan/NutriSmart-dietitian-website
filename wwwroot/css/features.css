@@ -1,0 +1,125 @@
+/* === CORE LAYOUT === */
+:root {
+    --sidebar-w: 280px;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* === SIDEBAR (DESKTOP) === */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    background-color: var(--bg-sidebar);
+    border-right: 1px solid var(--border-color, #e5e7eb);
+    overflow-y: auto;
+    z-index: 1030;
+    transition: transform 0.3s ease;
+}
+
+/* === MAIN CONTENT === */
+.main-content {
+    margin-left: var(--sidebar-w);
+    min-height: 100vh;
+    width: calc(100% - var(--sidebar-w));
+}
+
+.top-header {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color, #e5e7eb);
+}
+
+/* === MOBILE (< 992px) === */
+@media (max-width: 991.98px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1025;
+        display: none;
+    }
+
+    .sidebar-overlay.show {
+        display: block;
+    }
+}
+
+/* === DARK MODE === */
+[data-theme="dark"] .top-header {
+    background-color: rgba(33, 37, 41, 0.95);
+    border-bottom-color: #495057;
+}
+
+[data-theme="dark"] .bg-white {
+    background: var(--bg-card) !important;
+    color: #f8f9fa;
+}
+
+[data-theme="dark"] .bg-light {
+    background: var(--bg-secondary, #374151) !important;
+    color: #e9ecef;
+}
+
+[data-theme="dark"] .text-muted {
+    color: #adb5bd !important;
+}
+
+/* Login Page Specific Dark Mode Fixes */
+[data-theme="dark"] .login-card {
+    background-color: rgba(33, 37, 41, 0.95) !important;
+    color: #fff !important;
+}
+
+[data-theme="dark"] .input-group-text,
+[data-theme="dark"] .form-control {
+    background-color: #212529 !important;
+    border-color: #495057 !important;
+    color: #fff !important;
+}
+
+/* === UTILITIES === */
+.card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+}
+
+.hover-elevate {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-elevate:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
+}
+
+/* Fix sticky footer */
+.main-content {
+    display: flex;
+    flex-direction: column;
+}

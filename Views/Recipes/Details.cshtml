@@ -1,0 +1,92 @@
+@model NutriSmart.Models.Recipe
+
+@{
+    ViewData["Title"] = @Model.Ad;
+}
+
+<div class="container py-4">
+    <div class="row">
+        <!-- Image & Meta -->
+        <div class="col-lg-6 mb-4">
+            <div class="position-relative rounded-4 overflow-hidden shadow mb-3">
+                 @if (!string.IsNullOrEmpty(Model.ResimYolu))
+                 {
+                     <img src="~/images/recipes/@Model.ResimYolu" asp-append-version="true" class="img-fluid w-100" alt="@Model.Ad" style="height: 400px; object-fit: cover;" onerror="this.src='https://placehold.co/800x600/84A98C/white?text=@Model.Ad'">
+                 }
+                 else
+                 {
+                     <div class="bg-success bg-opacity-10 d-flex align-items-center justify-content-center" style="height: 400px;">
+                        <i class="bi bi-egg-fried fs-1 text-success opacity-50" style="font-size: 5rem !important;"></i>
+                    </div>
+                 }
+            </div>
+            <div class="d-flex gap-3 text-center">
+                <div class="bg-white shadow-sm rounded p-3 flex-fill">
+                    <div class="display-6 fw-bold text-success">@(Model.HazirlamaSuresi + Model.PisirmeSuresi)</div>
+                    <div class="text-muted small">Dakika</div>
+                </div>
+                 <div class="bg-white shadow-sm rounded p-3 flex-fill">
+                    <div class="display-6 fw-bold text-warning">@(Model.Kalori?.ToString() ?? "-")</div>
+                    <div class="text-muted small">Kalori</div>
+                </div>
+                 <div class="bg-white shadow-sm rounded p-3 flex-fill">
+                    <div class="display-6 fw-bold text-primary">@Model.KisiSayisi</div>
+                    <div class="text-muted small">Kişilik</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="col-lg-6">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                 <h1 class="fw-bold display-6 mb-0">@Model.Ad</h1>
+                 <span class="badge bg-success rounded-pill fs-6 px-3 py-2">@Model.Kategori</span>
+            </div>
+           
+            <div class="card border-0 bg-light mb-4">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-3 text-success"><i class="bi bi-basket me-2"></i>Malzemeler</h5>
+                    <ul class="list-unstyled mb-0">
+                        @if (!string.IsNullOrEmpty(Model.Malzemeler))
+                        {
+                            var malzemeler = Model.Malzemeler.Split(new[] { '\n', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                            foreach (var item in malzemeler)
+                            {
+                                <li class="mb-2 border-bottom pb-2"><i class="bi bi-check2-circle text-success me-2"></i>@item.Trim()</li>
+                            }
+                        }
+                        else
+                        {
+                            <li>Malzeme bilgisi girilmemiş.</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <h5 class="fw-bold mb-3 text-success"><i class="bi bi-list-ol me-2"></i>Hazırlanışı</h5>
+            <div class="list-group list-group-flush list-group-numbered">
+                 @if (!string.IsNullOrEmpty(Model.Talimatlar))
+                 {
+                      var talimatlar = Model.Talimatlar.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                      foreach (var adim in talimatlar)
+                      {
+                          <div class="list-group-item bg-transparent border-0 ps-0">@adim.Trim()</div>
+                      }
+                 }
+                 else
+                 {
+                     <p class="text-muted">Hazırlanış tarifi girilmemiş.</p>
+                 }
+            </div>
+            
+            <div class="mt-4 pt-3 border-top d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-outline-secondary rounded-pill">
+                    <i class="bi bi-arrow-left me-2"></i>Listeye Dön
+                </a>
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning rounded-pill px-4 text-white fw-bold">
+                    <i class="bi bi-pencil me-2"></i>Düzenle
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

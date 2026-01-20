@@ -1,0 +1,114 @@
+@{
+    ViewData["Title"] = "Mutfak Sırları & Food Hacks";
+}
+
+<div class="container-fluid py-4">
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold text-success mb-3">
+            <i class="bi bi-magic me-2"></i>Mutfak Sırları & Food Hacks
+        </h1>
+        <p class="lead text-muted">Hayatınızı kolaylaştıracak pratik bilgiler ve sağlıklı yaşam ipuçları.</p>
+    </div>
+
+    <div class="row g-4 masonry-grid">
+        <!-- Hack 1 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100 card-hover">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="badge bg-success rounded-pill me-2">Taze Kal</span>
+                        <small class="text-muted"><i class="bi bi-clock me-1"></i>2 dk</small>
+                    </div>
+                    <h3 class="h4 fw-bold mb-3">Yeşillikleri Canlandırın</h3>
+                    <p class="text-muted">Solmuş marul veya ıspanaklarınızı atmayın! Buzlu su dolu bir kaseye koyup 15-20 dakika bekletirseniz, ilk günkü gibi taze ve kıtır olacaklardır.</p>
+                </div>
+                <div class="card-footer bg-transparent border-top-0 pb-4">
+                    <button class="btn btn-outline-success btn-sm rounded-pill w-100">
+                        <i class="bi bi-heart me-1"></i> Beğen
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hack 2 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100 card-hover bg-gradient-primary text-white">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="badge bg-white text-primary rounded-pill me-2">Pratik</span>
+                    </div>
+                    <h3 class="h4 fw-bold mb-3">Kolay Yumurta Soyma</h3>
+                    <p class="text-white-50">Haşlanmış yumurtaları soyarken zorlanıyor musunuz? Haşlama suyuna bir dilim limon veya bir çay kaşığı karbonat ekleyin. Kabuklar kendiliğinden ayrılacak!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hack 3 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100 card-hover">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="badge bg-warning text-dark rounded-pill me-2">Lezzet</span>
+                    </div>
+                    <h3 class="h4 fw-bold mb-3">Kahveyi Özelleştirin</h3>
+                    <p class="text-muted">Kahvenize şeker yerine bir tutam tarçın veya kakao ekleyin. Hem kalorisi düşer hem de metabolizmayı hızlandıran bir aroma kazanır.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hack 4 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100 card-hover">
+                <div class="card-body p-4">
+                    <h3 class="h4 fw-bold mb-3">Muzları Daha Uzun Saklayın</h3>
+                    <p class="text-muted">Muzların sap kısımlarını streç film ile sararsanız, kararmalarını 3-4 gün geciktirebilirsiniz.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hack 5 -->
+         <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100 card-hover bg-gradient-dark text-white">
+                <div class="card-body p-4">
+                    <h3 class="h4 fw-bold mb-3">Bayat Ekmek Pizzası</h3>
+                    <p class="text-white-50">Bayat ekmekleri çöpe atmayın. Dilimleyip üzerine domates sosu, kekik ve peynir koyup fırınlayın. Harika bir atıştırmalık!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hack 6 -->
+         <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100 card-hover">
+                 <div class="card-body p-4">
+                    <h3 class="h4 fw-bold mb-3">Zencefil Soyma Sanatı</h3>
+                    <p class="text-muted">Zencefili bıçakla değil, tatlı kaşığı ile soyun. Hem daha güvenli hem de ziyan etmemiş olursunuz.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.15)!important;
+        transition: all 0.3s ease;
+    }
+    
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .bg-gradient-dark {
+        background: linear-gradient(135deg, #434343 0%, #000000 100%);
+    }
+    
+    [data-theme="dark"] .card:not(.text-white):not(.bg-primary):not(.bg-gradient-primary):not(.bg-gradient-dark) {
+        background: var(--bg-card);
+        color: var(--text-primary);
+    }
+    
+    [data-theme="dark"] .card-body {
+        color: inherit;
+    }
+</style>

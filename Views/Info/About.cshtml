@@ -1,0 +1,173 @@
+@model List<NutriSmart.Models.User>
+@{
+    ViewData["Title"] = "Hakkımızda";
+}
+
+<div class="row align-items-center mb-5 fade-in">
+    <div class="col-lg-6">
+        <h1 class="display-4 fw-bold mb-4">
+            Sağlıklı Yaşam <br /><span class="text-primary-custom">Yolculuğunuz Burada Başlıyor</span>
+        </h1>
+        <p class="lead text-secondary mb-4">
+            NutriSmart, kişiselleştirilmiş beslenme planları ve uzman diyetisyen desteği ile hedeflerinize ulaşmanızı sağlayan kapsamlı bir sağlık platformudur.
+        </p>
+        <div class="d-flex gap-3">
+            <a asp-controller="Info" asp-action="Contact" class="btn btn-primary btn-lg">İletişime Geçin</a>
+            <a href="#team-section" class="btn btn-outline-primary btn-lg">Ekibimizle Tanışın</a>
+        </div>
+    </div>
+    <div class="col-lg-6 mt-4 mt-lg-0">
+        <div class="card border-0 shadow-lg p-3">
+            <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                 class="card-img-top rounded" alt="Healthy Food" style="height: 400px; object-fit: cover;">
+        </div>
+    </div>
+</div>
+
+<div class="row mb-5 text-center fade-in" style="animation-delay: 0.2s;">
+    <div class="col-12 mb-4">
+        <h2 class="fw-bold">Neden NutriSmart?</h2>
+        <p class="text-secondary">Sizi anlayan ve ihtiyaçlarınıza göre şekillenen bir platform.</p>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 p-4 border-0 shadow-sm hover-elevate">
+            <div class="display-5 text-primary-custom mb-3"><i class="bi bi-person-check-fill"></i></div>
+            <h4 class="card-title">Kişiselleştirilmiş Planlar</h4>
+            <p class="card-text text-secondary">Vücut tipinize, hedeflerinize ve yaşam tarzınıza özel olarak hazırlanan diyet listeleri.</p>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 p-4 border-0 shadow-sm hover-elevate">
+            <div class="display-5 text-primary-custom mb-3"><i class="bi bi-calendar-check-fill"></i></div>
+            <h4 class="card-title">Takip ve Analiz</h4>
+            <p class="card-text text-secondary">Gelişimizi güncel olarak takip edin, detaylı grafikler ve raporlarla motivasyonunuzu koruyun.</p>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 p-4 border-0 shadow-sm hover-elevate">
+            <div class="display-5 text-primary-custom mb-3"><i class="bi bi-chat-dots-fill"></i></div>
+            <h4 class="card-title">Uzman Desteği</h4>
+            <p class="card-text text-secondary">Aklınıza takılan her soruda alanında uzman diyetisyenlerimizden destek alın.</p>
+        </div>
+    </div>
+</div>
+
+<div class="bg-light p-5 rounded-3 mb-5 fade-in" style="animation-delay: 0.4s;">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h2 class="fw-bold mb-3">Misyonumuz</h2>
+            <p class="text-secondary">
+                Toplumun her kesiminden bireylerin sağlıklı beslenme alışkanlıkları kazanmasına yardımcı olmak, bilimsel veriler ışığında en doğru ve uygulanabilir beslenme çözümlerini sunmaktır.
+            </p>
+        </div>
+        <div class="col-md-6 text-md-end">
+             <h2 class="fw-bold mb-3">Vizyonumuz</h2>
+            <p class="text-secondary">
+                Teknolojiyi sağlıkla buluşturarak, dünyanın en güvenilir ve tercih edilen dijital beslenme asistanı olmak.
+            </p>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+
+<!-- Team Section -->
+<div id="team-section" class="mb-5 fade-in" style="animation-delay: 0.6s;">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">Ekibimizle Tanışın</h2>
+        <p class="text-secondary">Size en iyi hizmeti sunmak için çalışan uzman diyetisyenlerimiz.</p>
+    </div>
+
+    <div class="row g-4">
+        @if (Model != null && Model.Count > 0)
+        {
+            @foreach (var dietitian in Model)
+            {
+                <div class="col-md-6 col-lg-3">
+                    <div class="card border-0 shadow-sm h-100 text-center hover-elevate">
+                        <div class="card-body p-4">
+                            <div class="mb-4 position-relative d-inline-block">
+                                @if (!string.IsNullOrEmpty(dietitian.ProfilResmi))
+                                {
+                                    <img src="~/images/profiles/@dietitian.ProfilResmi" alt="@dietitian.Ad @dietitian.Soyad" 
+                                         class="rounded-circle shadow-sm" style="width: 120px; height: 120px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <img src="https://ui-avatars.com/api/?name=@dietitian.Ad+@dietitian.Soyad&background=random&size=120" 
+                                         alt="@dietitian.Ad" class="rounded-circle shadow-sm">
+                                }
+                                <span class="position-absolute bottom-0 end-0 bg-success border border-white rounded-circle p-2"></span>
+                            </div>
+                            <h5 class="fw-bold mb-1">@dietitian.Ad @dietitian.Soyad</h5>
+                            <p class="text-primary small mb-3">Uzman Diyetisyen</p>
+                            <div class="d-flex justify-content-center gap-2">
+                                <a href="#" class="btn btn-sm btn-light rounded-circle"><i class="bi bi-twitter-x"></i></a>
+                                <a href="#" class="btn btn-sm btn-light rounded-circle"><i class="bi bi-linkedin"></i></a>
+                                <a href="#" class="btn btn-sm btn-light rounded-circle"><i class="bi bi-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <!-- Placeholder Team Members -->
+             <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100 text-center hover-elevate">
+                    <div class="card-body p-4">
+                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=300" 
+                             alt="Diyetisyen" class="rounded-circle shadow-sm mb-4" style="width: 120px; height: 120px; object-fit: cover;">
+                        <h5 class="fw-bold mb-1">Dr. Ayşe Yılmaz</h5>
+                        <p class="text-primary small mb-3">Baş Diyetisyen</p>
+                         <div class="d-flex justify-content-center gap-2">
+                                <a href="#" class="btn btn-sm btn-light rounded-circle"><i class="bi bi-twitter-x"></i></a>
+                                <a href="#" class="btn btn-sm btn-light rounded-circle"><i class="bi bi-linkedin"></i></a>
+                            </div>
+                    </div>
+                </div>
+            </div>
+             <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100 text-center hover-elevate">
+                    <div class="card-body p-4">
+                        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=300" 
+                             alt="Diyetisyen" class="rounded-circle shadow-sm mb-4" style="width: 120px; height: 120px; object-fit: cover;">
+                        <h5 class="fw-bold mb-1">Mehmet Demir</h5>
+                        <p class="text-primary small mb-3">Sporcu Beslenmesi Uzmanı</p>
+                         <div class="d-flex justify-content-center gap-2">
+                                <a href="#" class="btn btn-sm btn-light rounded-circle"><i class="bi bi-twitter-x"></i></a>
+                                <a href="#" class="btn btn-sm btn-light rounded-circle"><i class="bi bi-linkedin"></i></a>
+                            </div>
+                    </div>
+                </div>
+            </div>
+             <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100 text-center hover-elevate">
+                    <div class="card-body p-4">
+                         <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&q=80&w=300" 
+                             alt="Diyetisyen" class="rounded-circle shadow-sm mb-4" style="width: 120px; height: 120px; object-fit: cover;">
+                        <h5 class="fw-bold mb-1">Zeynep Kaya</h5>
+                        <p class="text-primary small mb-3">Klinik Diyetisyen</p>
+                         <div class="d-flex justify-content-center gap-2">
+                                <a href="#" class="btn btn-sm btn-light rounded-circle"><i class="bi bi-twitter-x"></i></a>
+                                <a href="#" class="btn btn-sm btn-light rounded-circle"><i class="bi bi-linkedin"></i></a>
+                            </div>
+                    </div>
+                </div>
+            </div>
+             <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100 text-center hover-elevate">
+                     <div class="card-body p-4">
+                        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 120px; height: 120px;">
+                            <i class="bi bi-person-plus fs-1 text-muted"></i>
+                        </div>
+                        <h5 class="fw-bold mb-1">Siz Olabilirsiniz</h5>
+                        <p class="text-primary small mb-3">Kariyer Fırsatları</p>
+                        <a href="#" class="btn btn-sm btn-outline-primary rounded-pill px-3">Başvur</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
