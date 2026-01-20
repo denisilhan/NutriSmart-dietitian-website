@@ -16,7 +16,46 @@ NutriSmart, diyetisyenler ve danışanlar için geliştirilmiş kapsamlı bir be
     *   **Responsive Tasarım:** Mobil uyumlu sidebar ve arayüz.
 *   **Raporlama:** Danışanlar için yazdırılabilir (Print-friendly) kişisel beslenme rehberi.
 
-## 🛠️ Teknolojiler
+## � Ekran Görüntüleri
+
+Uygulamanın arayüzünden bazı kareler:
+
+### 🏠 Giriş Ekranı
+Giriş sayfası, kullanıcıları modern bir tasarımla karşılar.
+
+![Giriş Ekranı](docs/screenshots/giris.png)
+
+### 📊 Admin Paneli
+Admin paneli üzerinden sistemdeki tüm istatistikler görüntülenebilir. Göz yormayan karanlık mod seçeneği de mevcuttur.
+
+| Light Mode | Dark Mode |
+| :---: | :---: |
+| ![Admin Light](docs/screenshots/admin.png) | ![Admin Dark](docs/screenshots/admindark.png) |
+
+### 🥗 Menü ve Ana Sayfa
+Kullanıcıların günlük besin takibini yaptığı ana ekran.
+
+| Light Mode | Dark Mode |
+| :---: | :---: |
+| ![Menü Light](docs/screenshots/menu.png) | ![Menü Dark](docs/screenshots/menudark.png) |
+
+### 🧮 Hesaplama Araçları
+Vücut Kitle İndeksi (BMI) ve Kalori İhtiyacı hesaplama araçları.
+
+| Light Mode | Dark Mode |
+| :---: | :---: |
+| ![Araçlar Light](docs/screenshots/tools.png) | ![Araçlar Dark](docs/screenshots/toolsdark.png) |
+
+### 👥 Diğer Yönetim Ekranları
+
+| Danışan Yönetimi | Besin Veritabanı |
+| :---: | :---: |
+| ![Danışanlar](docs/screenshots/clients.png) | ![Besinler](docs/screenshots/food.png) |
+
+**Alerjen Yönetimi:**
+![Alerjenler](docs/screenshots/allergens.png)
+
+## �🛠️ Teknolojiler
 
 Bu proje aşağıdaki teknolojiler kullanılarak geliştirilmiştir:
 
