@@ -1,3 +1,5 @@
+# Youtube Tanıtım Videosu
+https://youtu.be/it4qaXGwhFk
 # NutriSmart 🍎🥗
 
 NutriSmart, diyetisyenler ve danışanlar için geliştirilmiş kapsamlı bir beslenme ve diyet yönetim platformudur. Kullanıcı dostu arayüzü, gelişmiş karanlık mod desteği ve kişiselleştirilmiş raporlama özellikleri ile modern bir deneyim sunar.
