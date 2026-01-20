@@ -21,26 +21,26 @@ NutriSmart, diyetisyenler ve danışanlar için geliştirilmiş kapsamlı bir be
 Uygulamanın arayüzünden bazı kareler:
 
 ### 🏠 Giriş Ekranı
-Giriş sayfası, kullanıcıları modern bir tasarımla karşılar.
+Giriş sayfası, kullanıcıları şık ve modern bir arayüzle karşılar. Kullanıcı deneyimi ön planda tutularak tasarlanmıştır.
 
 ![Giriş Ekranı](docs/screenshots/giris.png)
 
 ### 📊 Admin Paneli
-Admin paneli üzerinden sistemdeki tüm istatistikler görüntülenebilir. Göz yormayan karanlık mod seçeneği de mevcuttur.
+Sistemdeki tüm verilerin ve kullanıcı aktivitelerinin detaylı olarak görüntülenebildiği kapsamlı yönetim paneli. Göz yormayan karanlık mod seçeneği ile uzun süreli kullanımlarda konfor sağlar.
 
 | Light Mode | Dark Mode |
 | :---: | :---: |
 | ![Admin Light](docs/screenshots/admin.png) | ![Admin Dark](docs/screenshots/admindark.png) |
 
 ### 🥗 Menü ve Ana Sayfa
-Kullanıcıların günlük besin takibini yaptığı ana ekran.
+Kullanıcıların günlük besin tüketimlerini kolayca takip edebildiği, kalori ve makro besin değerlerini anlık olarak görebildiği ana ekran.
 
 | Light Mode | Dark Mode |
 | :---: | :---: |
 | ![Menü Light](docs/screenshots/menu.png) | ![Menü Dark](docs/screenshots/menudark.png) |
 
 ### 🧮 Hesaplama Araçları
-Vücut Kitle İndeksi (BMI) ve Kalori İhtiyacı hesaplama araçları.
+Kullanıcıların sağlık hedeflerine ulaşmalarına yardımcı olan Vücut Kitle İndeksi (BMI) ve Günlük Kalori İhtiyacı hesaplama modülleri.
 
 | Light Mode | Dark Mode |
 | :---: | :---: |
